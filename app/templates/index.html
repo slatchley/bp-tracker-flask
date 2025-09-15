@@ -23,4 +23,60 @@
     </form>
 </section>
 
+<section class="card">
+    <div class="table-header">
+        <h2>Readings</h2>
+        <form>
+            <label for="sort">Sort</label>
+            <select name="sort" id="sort" onchange="this.form.submit()">
+                <option value="created_at_desc" {{ 'selected' if sort=='created_at_desc' }}>Newest</option>
+                <option value="created_at_asc" {{ 'selected' if sort=='created_at_asc' }}>Oldest</option>
+
+            </select>
+        </form>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Date/Time</th>
+                <th>Systolic</th>
+                <th>Diastolic</th>
+                <th>Pulse</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in readings %}
+            <tr>
+                <td>{{ r.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>{{ r.systolic }}</td>
+                <td>{{ r.diastolic }}</td>
+                <td>{{ r.pulse if r.pulse is not none else '—' }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('delete', reading_id=r.id) }}" onsubmit="return confirm('Delete this reading?');">
+                        <button type="submit" class="danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" class="muted">No readings yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination" style="text-align:center; margin-top:1em;">
+        {% if has_prev %}
+            <a href="{{ url_for('index', sort=sort, page=page-1) }}" class="arrow">&larr; Prev</a>
+        {% endif %}
+        <span style="margin:0 1em;">Page {{ page }}</span>
+        {% if has_next %}
+            <a href="{{ url_for('index', sort=sort, page=page+1) }}" class="arrow">Next &rarr;</a>
+        {% endif %}
+    </div>
+</section>
+
+<section class="card">
+    <h2>Graph</h2>
+    <img src="{{ url_for('plot_png') }}" alt="Blood pressure chart">
+</section>
+
 {% endblock %}
