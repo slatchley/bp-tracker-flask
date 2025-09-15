@@ -1,0 +1,84 @@
+
+:root {
+    --bg: #0b0c10;
+    --card: #111218;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --accent: #3b82f6;
+    --danger: #ef4444;
+    --border: #1f2937;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
+    background: linear-gradient(180deg, #0b0c10, #0d0f14 60%, #0b0c10);
+    color: var(--text);
+}
+.container { max-width: 900px; margin: 0 auto; padding: 24px; }
+header h1 { font-size: 28px; margin: 0 0 12px; letter-spacing: 0.5px; }
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    margin: 16px 0;
+    box-shadow: 0 10px 30px var(--shadow);
+}
+h2 { margin-top: 0; font-size: 20px; }
+form.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    align-items: end;
+}
+label { display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+input, select {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: #0f1117;
+    color: var(--text);
+    outline: none;
+}
+button {
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+button:hover { filter: brightness(1.08); }
+button.danger { background: var(--danger); }
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 12px;
+}
+th, td {
+    border-bottom: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 14px;
+}
+th { background: #0f1117; position: sticky; top: 0; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+.flash-list { list-style: none; padding-left: 0; margin: 0 0 12px; }
+.flash-list li {
+    background: #0e1a2b;
+    border: 1px solid #15263d;
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+.muted { color: var(--muted); }

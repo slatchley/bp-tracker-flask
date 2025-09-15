@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+    <h2>Add a Reading</h2>
+    <form method="POST" action="{{ url_for('add') }}" class="grid">
+        <label>
+            <span>Date</span>
+            <input type="date" name="date" value="{{ (now or '')[:10] }}" required>
+        </label>
+        <label>
+            <span>Systolic</span>
+            <input type="number" name="systolic" min="70" max="260" required placeholder="e.g., 120">
+        </label>
+        <label>
+            <span>Diastolic</span>
+            <input type="number" name="diastolic" min="40" max="150" required placeholder="e.g., 80">
+        </label>
+        <label>
+            <span>Pulse (optional)</span>
+            <input type="number" name="pulse" min="20" max="220" placeholder="e.g., 70">
+        </label>
+        <button type="submit">Add</button>
+    </form>
+</section>
+
+{% endblock %}
