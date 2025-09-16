@@ -26,6 +26,14 @@ header h1 { font-size: 28px; margin: 0 0 12px; letter-spacing: 0.5px; }
     margin: 16px 0;
     box-shadow: 0 10px 30px var(--shadow);
 }
+
+.graph-img {
+  max-width: 100%;   /* never exceed card width */
+  height: auto;      /* keep aspect ratio */
+  display: block;
+  margin: 0 auto;    /* center it */
+}
+
 h2 { margin-top: 0; font-size: 20px; }
 form.grid {
     display: grid;

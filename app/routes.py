@@ -1,5 +1,7 @@
 from datetime import datetime
+import io
 from flask import Flask, render_template, request, redirect, url_for, send_file, flash
+from matplotlib import pyplot as plt
 from app import app, db
 from app.models import Reading
 
@@ -57,4 +59,44 @@ def delete(reading_id):
 
 @app.route("/plot.png")
 def plot_png():
-    return("Plot function called")  # Placeholder for actual plot generation logic
+    readings = Reading.query.order_by(Reading.created_at.asc()).all()
+
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    if readings:
+        xs = [r.created_at for r in readings]
+        sys_vals = [r.systolic for r in readings]
+        dia_vals = [r.diastolic for r in readings]
+        pulse_vals = [r.pulse for r in readings]
+
+        ax.plot(xs, sys_vals, marker='o', label="Systolic")
+        ax.plot(xs, dia_vals, marker='o', label="Diastolic")
+        ax.plot(xs, pulse_vals, marker='o', label="Pulse")
+
+        # Get data ranges
+        all_y = sys_vals + dia_vals + [p for p in pulse_vals if p is not None]
+        ymin, ymax = min(all_y), max(all_y)
+
+        # Apply padding and defaults
+        ymin = min(ymin, 40)
+        ymax = max(ymax, 200)
+        print(ymin, ymax)
+        ax.set_ylim(ymin, ymax)
+
+      
+        ax.set_title("Blood Pressure Over Time")
+        ax.set_xlabel("Date/Time")
+        ax.set_ylabel("mmHg / bpm")
+        ax.grid(True, alpha=0.3)
+        ax.legend()
+        fig.autofmt_xdate()
+    else:
+        ax.text(0.5, 0.5, "No readings yet", ha='center', va='center', fontsize=20, color='gray')
+        ax.set_xticks([])
+        ax.set_yticks([])
+
+    buf = io.BytesIO()
+    plt.tight_layout()
+    plt.savefig(buf, format="png", dpi=150)
+    plt.close(fig)
+    buf.seek(0)
+    return send_file(buf, mimetype="image/png")
