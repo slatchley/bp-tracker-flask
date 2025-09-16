@@ -52,7 +52,11 @@
                 <td>{{ r.systolic }}</td>
                 <td>{{ r.diastolic }}</td>
                 <td>{{ r.pulse if r.pulse is not none else '—' }}</td>
-                
+                <td>
+                    <form method="POST" action="{{ url_for('delete', reading_id=r.id) }}" onsubmit="return confirm('Delete this reading?');">
+                        <button type="submit" class="danger">Delete</button>
+                    </form>
+                </td>
             </tr>
             {% else %}
             <tr><td colspan="5" class="muted">No readings yet.</td></tr>

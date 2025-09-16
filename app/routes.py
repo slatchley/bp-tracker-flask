@@ -47,6 +47,13 @@ def add():
     flash("Reading added.")
     return redirect(url_for("index"))
 
+@app.route("/delete/<int:reading_id>", methods=["POST"])
+def delete(reading_id):
+    r = Reading.query.get_or_404(reading_id)
+    db.session.delete(r)
+    db.session.commit()
+    flash("Reading deleted.")
+    return redirect(url_for("index"))
 
 @app.route("/plot.png")
 def plot_png():
