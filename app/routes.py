@@ -72,6 +72,11 @@ def plot_png():
         ax.plot(xs, dia_vals, marker='o', label="Diastolic")
         ax.plot(xs, pulse_vals, marker='o', label="Pulse")
 
+        # after plotting your data but before ax.legend()
+        ax.axhline(y=130, color="red", linestyle="--", linewidth=1, label="High Systolic (130)")
+        ax.axhline(y=80, color="orange", linestyle="--", linewidth=1, label="High Diastolic (80)")
+
+
         # Get data ranges
         all_y = sys_vals + dia_vals + [p for p in pulse_vals if p is not None]
         ymin, ymax = min(all_y), max(all_y)
